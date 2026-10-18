@@ -6,7 +6,8 @@
 # ==============================================================================
 set -euo pipefail
 
-IRAM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REAL_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
+IRAM_DIR="$(cd "$(dirname "$REAL_PATH")/.." && pwd)"
 export PYTHONPATH="${IRAM_DIR}:${PYTHONPATH:-}"
 
 if [ "${1:-}" = "mcp" ]; then
