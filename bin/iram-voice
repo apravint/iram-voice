@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# IRAM OS VoiceStudio Unified CLI
+# Open-Source Voice Cloning, Voice Design, Speech Synthesis & Video Dubbing
+# iram:summary=Open-Source VoiceStudio (Voice Cloning, Voice Design & Speech Synthesis)
+# ==============================================================================
+set -euo pipefail
+
+IRAM_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export PYTHONPATH="${IRAM_DIR}:${PYTHONPATH:-}"
+
+if [ "${1:-}" = "mcp" ]; then
+    shift
+    exec python3 -m iram_voice.mcp_server "$@"
+fi
+
+exec python3 -m iram_voice.core "$@"
