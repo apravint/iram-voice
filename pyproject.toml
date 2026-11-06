@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iram-voice"
+version = "0.1.0"
+description = "Voice presets, edge-tts / VoiceStudio speech synthesis, video dubbing and an MCP server for Linux desktops"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+# The core package uses only the Python standard library.
+dependencies = []
+
+[project.optional-dependencies]
+# Online TTS engine (sends text to Microsoft's service). Installs the `edge-tts` CLI.
+edge = ["edge-tts"]
+dev = ["pytest>=7", "ruff"]
+
+[tool.setuptools]
+packages = ["iram_voice"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]  # long JSON-schema strings in mcp_server.py
