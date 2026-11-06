@@ -5,17 +5,17 @@ Open-source voice cloning, voice design, video dubbing, and speech synthesis eng
 Compatible with debpalash/VoiceStudio & OmniVoice architecture.
 """
 
-import os
-import sys
+import argparse
 import json
-import time
+import os
 import shutil
 import subprocess
-import argparse
-import urllib.request
+import sys
+import time
 import urllib.error
 import urllib.parse
-from typing import Dict, List, Optional, Any
+import urllib.request
+from typing import Any, Dict, List, Optional
 
 VOICE_DIR = os.path.expanduser("~/.local/share/iram/voices")
 PROFILES_FILE = os.path.join(VOICE_DIR, "profiles.json")
@@ -229,7 +229,7 @@ class VoiceStudioEngine:
                     self.profiles = json.load(f)
             except Exception:
                 self.profiles = {}
-        
+
         # Merge default presets if not already registered
         for p in DEFAULT_PROFILES:
             if p["id"] not in self.profiles:
@@ -435,7 +435,7 @@ class VoiceStudioEngine:
                 # If cloned profile, apply acoustic timbre filter from reference audio
                 if profile.get("engine") == "cloned" and os.path.isfile(profile.get("ref_audio", "")):
                     self._apply_clone_timbre(output_path, profile["ref_audio"])
-                
+
                 if play:
                     self.play_audio(output_path)
                 return output_path
@@ -486,7 +486,7 @@ class VoiceStudioEngine:
             raise FileNotFoundError(f"Video not found: {video_path}")
 
         voice_audio = self.synthesize(transcript_text, voice_id=voice_id, play=False)
-        
+
         # FFmpeg sidechain ducking (-14dB on video audio when voice is speaking)
         cmd = [
             "ffmpeg", "-y",

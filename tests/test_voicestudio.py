@@ -1,12 +1,11 @@
-import os
-import sys
+import http.server
 import io
 import json
+import os
 import tempfile
 import threading
 import unittest
 from unittest import mock
-import http.server
 
 from iram_voice.core import VoiceStudioClient, VoiceStudioEngine, format_from_path
 
